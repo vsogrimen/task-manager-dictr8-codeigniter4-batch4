@@ -17,6 +17,10 @@ class TaskSeeder extends Seeder
             'id',
         );
 
+        $categoryIds = array_column(
+            $this->db->table('categories')->select('id')->get()->getResultArray(),
+            'id',
+        );
 
         for ($i = 0; $i < 30; $i++) {
             $created = $faker->dateTimeBetween('-30 days', 'now');
@@ -25,6 +29,7 @@ class TaskSeeder extends Seeder
 
             $rows[] = [
                 'user_id'     => $faker->randomElement($userIds),
+                'category_id' => $faker->optional(0.8)->randomElement($categoryIds),
                 'title'       => ucfirst($faker->words(4, true)),
                 'description' => $faker->paragraph(),
                 'status'      => $faker->randomElement($statuses),

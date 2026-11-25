@@ -67,6 +67,7 @@ class Auth extends BaseController
         session()->set([
             'user_id'   => $user->id,
             'user_name' => $user->name,
+            'user_role' => $user->role,
         ]);
 
         return redirect()->route('tasks.index')

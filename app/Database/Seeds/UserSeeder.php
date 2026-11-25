@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
         $users->insert(new User([
             'name'     => 'Ben Cruz',
             'email'    => 'ben@example.com',
+            'role'     => 'admin',
             'password' => 'password123',
         ]));
     }

@@ -11,7 +11,7 @@ class UserModel extends Model
     protected $primaryKey    = 'id';
     protected $returnType    = User::class;
     protected $useTimestamps = true;
-    protected $allowedFields = ['name', 'email', 'password_hash'];
+    protected $allowedFields = ['name', 'email', 'password_hash', 'role'];
 
     public function findByEmail(string $email): ?User
     {

@@ -16,6 +16,10 @@
             <div class="navbar-nav ms-auto align-items-center">
                 <?php if (session()->has('user_id')): ?>
                     <a class="nav-link" href="<?= url_to('tasks.index') ?>">Tasks</a>
+                    <?php if (session('user_role') === 'admin'): ?>
+                        <a class="nav-link" href="<?= url_to('admin') ?>">Admin</a>
+                    <?php endif ?>
+
                     <span class="navbar-text mx-3"><?= esc(session('user_name')) ?></span>
                     <?= form_open(url_to('logout')) ?>
                     <button class="btn btn-sm btn-outline-light">Log out</button>
