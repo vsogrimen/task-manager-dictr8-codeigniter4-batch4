@@ -11,7 +11,8 @@ $routes->get('login', 'Auth::loginView', ['as' => 'login']);
 $routes->post('login', 'Auth::loginAction');
 $routes->post('logout', 'Auth::logoutAction', ['as' => 'logout']);
 
-$routes->group('tasks', static function ($routes) {
+$routes->group('tasks', ['filter' => 'auth'], static function ($routes) {
+    // $routes->group('tasks', static function ($routes) {
     $routes->get('/', 'Tasks::index', ['as' => 'tasks.index']);
     $routes->get('new', 'Tasks::new', ['as' => 'tasks.new']);
     $routes->post('/', 'Tasks::create', ['as' => 'tasks.create']);
