@@ -12,6 +12,11 @@ class TaskSeeder extends Seeder
         $faker    = Factory::create();
         $statuses = ['pending', 'in_progress', 'completed'];
         $rows     = [];
+        $userIds  = array_column(
+            $this->db->table('users')->select('id')->get()->getResultArray(),
+            'id',
+        );
+
 
         for ($i = 0; $i < 30; $i++) {
             $created = $faker->dateTimeBetween('-30 days', 'now');
@@ -19,6 +24,7 @@ class TaskSeeder extends Seeder
                 ->dateTimeBetween('-10 days', '+20 days');
 
             $rows[] = [
+                'user_id'     => $faker->randomElement($userIds),
                 'title'       => ucfirst($faker->words(4, true)),
                 'description' => $faker->paragraph(),
                 'status'      => $faker->randomElement($statuses),
