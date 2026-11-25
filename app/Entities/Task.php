@@ -16,6 +16,8 @@ class Task extends Entity
 
     protected $casts = [
         'id' => 'integer',
+        'user_id' => 'integer',
+
     ];
 
     public function statusLabel(): string

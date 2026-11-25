@@ -16,5 +16,6 @@ class TaskModel extends Model
         'description',
         'status',
         'due_date',
+        'user_id',
     ];
 }

@@ -21,9 +21,18 @@ class Tasks extends BaseController
     {
         return view('tasks/index', [
             'title' => 'My Tasks',
-            'tasks' => $this->tasks->orderBy('created_at', 'DESC')->findAll(),
+            'tasks' => $this->tasks->where('user_id', $this->userId())
+                ->orderBy('created_at', 'DESC')
+                ->findAll(),
         ]);
     }
+
+
+    private function userId(): int
+    {
+        return (int) session('user_id');
+    }
+
 
     public function show(int $id): string
     {
@@ -49,10 +58,12 @@ class Tasks extends BaseController
             return redirect()->back()->withInput();
         }
 
+        $data['user_id'] = $this->userId();
         $this->tasks->insert($data);
 
         return redirect()->route('tasks.index')->with('message', 'Task added.');
     }
+
 
     /**
      * Only the fields a user may set. A blank date is stored as NULL.
@@ -98,9 +109,13 @@ class Tasks extends BaseController
         return redirect()->route('tasks.index')->with('message', 'Task deleted.');
     }
 
+    /**
+     * The task, if it belongs to the logged-in user. Anyone else gets a 404,
+     * so they cannot even tell that the task exists.
+     */
     private function findTaskOr404(int $id): Task
     {
-        $task = $this->tasks->find($id);
+        $task = $this->tasks->where('user_id', $this->userId())->find($id);
 
         if ($task === null) {
             throw PageNotFoundException::forPageNotFound('Task not found.');
