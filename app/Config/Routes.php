@@ -5,6 +5,12 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index', ['as' => 'home']);
 
+$routes->get('register', 'Auth::registerView', ['as' => 'register']);
+$routes->post('register', 'Auth::registerAction');
+$routes->get('login', 'Auth::loginView', ['as' => 'login']);
+$routes->post('login', 'Auth::loginAction');
+$routes->post('logout', 'Auth::logoutAction', ['as' => 'logout']);
+
 $routes->group('tasks', static function ($routes) {
     $routes->get('/', 'Tasks::index', ['as' => 'tasks.index']);
     $routes->get('new', 'Tasks::new', ['as' => 'tasks.new']);
